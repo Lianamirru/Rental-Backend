@@ -1,20 +1,15 @@
 const express = require("express");
+const moment = require("moment");
+
 const { Movie, validate } = require("../models/movie");
 const { Genre } = require("../models/genre");
 
 const router = express.Router();
 
 router.get("/", async (req, res) => {
-  const pageNumber = 3;
-  const pageSize = 4;
   const movies = await Movie.find().select("-__v").sort("title");
-  // .skip((pageNumber - 1) * pageSize)
-  // .limit(pageSize);
   res.send(movies);
 });
-
-// inc update operator set
-// const course = await Course.update({_id: id}, {$set: {author: ...}})
 
 router.post("/", async (req, res) => {
   const { error } = validate(req.body);
@@ -81,17 +76,13 @@ router.delete("/:id", async (req, res) => {
   res.send(movie);
 });
 
-router.get(
-  "/:id",
+router.get("/:id", async (req, res) => {
+  const movie = await Movie.findById(req.params.id).select("-__v");
 
-  async (req, res) => {
-    const movie = await Movie.findById(req.params.id).select("-__v");
+  if (!movie)
+    return res.status(404).send("The movie with the given ID was not found.");
 
-    if (!movie)
-      return res.status(404).send("The movie with the given ID was not found.");
-
-    res.send(movie);
-  }
-);
+  res.send(movie);
+});
 
 module.exports = router;
