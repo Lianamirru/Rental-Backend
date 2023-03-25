@@ -29,14 +29,14 @@ const Movie = mongoose.model(
       max: 255,
     },
     liked: { type: Boolean, default: false },
-    likes: [String],
+    likes: { type: Number, default: 0 },
   })
 );
 
 function validateMovie(movie) {
   const schema = Joi.object({
     title: Joi.string().min(5).max(50).required(),
-    genreId: Joi.required(),
+    genreId: Joi.objectId().required(),
     numberInStock: Joi.number().min(0).required(),
     dailyRentalRate: Joi.number().min(0).required(),
   });
