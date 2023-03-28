@@ -3,7 +3,7 @@ const router = express.Router();
 
 const { Genre, validate } = require("../models/genre");
 
-router.get("/", async (req, res) => {
+router.get("/", async (req, res, next) => {
   const genres = await Genre.find().select("-__v").sort("name");
   res.send(genres);
 });
