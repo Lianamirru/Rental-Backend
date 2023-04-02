@@ -3,9 +3,14 @@ const router = express.Router();
 
 const { Genre, validate } = require("../models/genre");
 
-router.get("/", async (req, res, next) => {
+router.get("/", async (req, res) => {
   const genres = await Genre.find().select("-__v").sort("name");
   res.send(genres);
+});
+
+router.get("/:id", async (req, res) => {
+  const genre = await Genre.findById(req.params.id);
+  res.send(genre);
 });
 
 router.post("/", async (req, res) => {
