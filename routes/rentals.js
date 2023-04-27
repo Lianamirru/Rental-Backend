@@ -1,8 +1,11 @@
+const express = require("express");
+
 const { Rental, validate } = require("../models/rental");
 const { Movie } = require("../models/movie");
 const { Customer } = require("../models/customer");
-const auth = require("../middleware/auth");
-const express = require("express");
+
+const auth = require("../middleware/authorization");
+
 const router = express.Router();
 
 router.get("/", auth, async (req, res) => {
@@ -11,8 +14,11 @@ router.get("/", auth, async (req, res) => {
 });
 
 router.post("/", auth, async (req, res) => {
+  console.log("dd");
   const { error } = validate(req.body);
   if (error) return res.status(400).send(error.details[0].message);
+
+  const { dateOut, dateReturned } = req.body;
 
   const customer = await Customer.findById(req.body.customerId);
   if (!customer) return res.status(400).send("Invalid customer.");
@@ -34,9 +40,12 @@ router.post("/", auth, async (req, res) => {
       title: movie.title,
       dailyRentalRate: movie.dailyRentalRate,
     },
+    dateOut,
+    dateReturned,
   });
 
   rental.save();
+  res.send(rental);
 });
 
 router.get("/:id", [auth], async (req, res) => {
