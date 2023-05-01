@@ -7,7 +7,7 @@ const rentalSchema = new mongoose.Schema({
       name: {
         type: String,
         required: true,
-        minlength: 5,
+        minlength: 1,
         maxlength: 50,
       },
       isGold: {
@@ -17,8 +17,7 @@ const rentalSchema = new mongoose.Schema({
       phone: {
         type: String,
         required: true,
-        minlength: 5,
-        maxlength: 50,
+        length: 12,
       },
     }),
     required: true,

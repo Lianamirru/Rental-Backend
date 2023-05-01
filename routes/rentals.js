@@ -8,13 +8,18 @@ const auth = require("../middleware/authorization");
 
 const router = express.Router();
 
-router.get("/", auth, async (req, res) => {
-  const rentals = await Rental.find().select("-__v").sort("-dateOut");
-  res.send(rentals);
+router.get("/", async (req, res) => {
+  const rentedDates = await Rental.find({
+    "movie._id": req.query.movieId,
+  })
+    .select("dateOut dateReturned -_id")
+    .sort("dateOut");
+
+  result = rentedDates ? rentedDates : [];
+  res.send(result);
 });
 
 router.post("/", auth, async (req, res) => {
-  console.log("dd");
   const { error } = validate(req.body);
   if (error) return res.status(400).send(error.details[0].message);
 
