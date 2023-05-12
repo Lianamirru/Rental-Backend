@@ -8,15 +8,25 @@ const auth = require("../middleware/authorization");
 
 const router = express.Router();
 
-router.get("/", async (req, res) => {
-  const rentedDates = await Rental.find({
-    "movie._id": req.query.movieId,
-  })
-    .select("dateOut dateReturned -_id")
-    .sort("dateOut");
+router.get("/", auth, async (req, res) => {
+  const { movieId } = req.query;
 
-  result = rentedDates ? rentedDates : [];
-  res.send(result);
+  if (movieId) {
+    const rentedDates = await Rental.find({
+      "movie._id": movieId,
+    })
+      .select("dateOut dateReturned -_id")
+      .sort("dateOut");
+
+    result = rentedDates ?? [];
+    res.send(result);
+  }
+  const customer = await Customer.findOne({ userId: req.user._id });
+
+  const rentals = await Rental.find({ "customer._id": customer._id })
+    .select("movie -_id dateOut dateReturned")
+    .sort("dateReturned");
+  res.send(rentals);
 });
 
 router.post("/", auth, async (req, res) => {
