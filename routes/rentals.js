@@ -20,13 +20,14 @@ router.get("/", auth, async (req, res) => {
 
     result = rentedDates ?? [];
     res.send(result);
-  }
-  const customer = await Customer.findOne({ userId: req.user._id });
+  } else {
+    const customer = await Customer.findOne({ userId: req.user._id });
 
-  const rentals = await Rental.find({ "customer._id": customer._id })
-    .select("movie -_id dateOut dateReturned")
-    .sort("dateReturned");
-  res.send(rentals);
+    const rentals = await Rental.find({ "customer._id": customer?._id })
+      .select("movie -_id dateOut dateReturned rentalFee")
+      .sort("dateReturned");
+    res.send(rentals ?? []);
+  }
 });
 
 router.post("/", auth, async (req, res) => {
@@ -41,8 +42,11 @@ router.post("/", auth, async (req, res) => {
   const movie = await Movie.findById(req.body.movieId);
   if (!movie) return res.status(400).send("Invalid movie.");
 
-  if (movie.numberInStock === 0)
-    return res.status(400).send("Movie not in stock.");
+  const timeDifference = Math.abs(
+    new Date(dateReturned).getTime() - new Date(dateOut).getTime()
+  );
+  const daysDifference = Math.ceil(timeDifference / (1000 * 60 * 60 * 24));
+  console.log(daysDifference * movie.dailyRentalRate);
 
   let rental = new Rental({
     customer: {
@@ -53,10 +57,10 @@ router.post("/", auth, async (req, res) => {
     movie: {
       _id: movie._id,
       title: movie.title,
-      dailyRentalRate: movie.dailyRentalRate,
     },
     dateOut,
     dateReturned,
+    rentalFee: (daysDifference + 1) * movie.dailyRentalRate,
   });
 
   rental.save();
