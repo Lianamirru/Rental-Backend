@@ -59,12 +59,17 @@ router.delete("/:id", auth, async (req, res) => {
   res.send(customer);
 });
 
-router.get("/:userId", auth, async (req, res) => {
+router.get("/:id", auth, async (req, res) => {
   const customer = await Customer.findOne({
-    userId: req.params.userId,
+    userId: req.params.id,
   }).select("name phone _id");
 
-  if (!customer) return res.send(null);
+  if (!customer) {
+    const customer = await Customer.findOne({
+      _id: req.params.id,
+    }).select("name phone _id");
+    return res.send(customer);
+  }
 
   res.send(customer);
 });

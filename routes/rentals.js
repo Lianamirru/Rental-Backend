@@ -21,12 +21,19 @@ router.get("/", auth, async (req, res) => {
     result = rentedDates ?? [];
     res.send(result);
   } else {
-    const customer = await Customer.findOne({ userId: req.user._id });
+    if (req.user.isAdmin) {
+      const rentals = await Rental.find()
+        .select("customer movie dateOut dateReturned rentalFee")
+        .sort("dateReturned");
+      res.send(rentals ?? []);
+    } else {
+      const customer = await Customer.findOne({ userId: req.user._id });
 
-    const rentals = await Rental.find({ "customer._id": customer?._id })
-      .select("movie -_id dateOut dateReturned rentalFee")
-      .sort("dateReturned");
-    res.send(rentals ?? []);
+      const rentals = await Rental.find({ "customer._id": customer?._id })
+        .select("movie dateOut dateReturned rentalFee")
+        .sort("dateReturned");
+      res.send(rentals ?? []);
+    }
   }
 });
 
