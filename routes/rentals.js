@@ -49,11 +49,8 @@ router.post("/", auth, async (req, res) => {
   const movie = await Movie.findById(req.body.movieId);
   if (!movie) return res.status(400).send("Invalid movie.");
 
-  const timeDifference = Math.abs(
-    new Date(dateReturned).getTime() - new Date(dateOut).getTime()
-  );
+  const timeDifference = Math.abs(new Date(dateReturned) - new Date(dateOut));
   const daysDifference = Math.ceil(timeDifference / (1000 * 60 * 60 * 24));
-  console.log(daysDifference * movie.dailyRentalRate);
 
   let rental = new Rental({
     customer: {
@@ -76,6 +73,15 @@ router.post("/", auth, async (req, res) => {
 
 router.get("/:id", [auth], async (req, res) => {
   const rental = await Rental.findById(req.params.id).select("-__v");
+
+  if (!rental)
+    return res.status(404).send("The rental with the given ID was not found.");
+
+  res.send(rental);
+});
+
+router.delete("/:id", async (req, res) => {
+  let rental = await Rental.findByIdAndRemove(req.params.id);
 
   if (!rental)
     return res.status(404).send("The rental with the given ID was not found.");
