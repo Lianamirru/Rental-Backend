@@ -3,7 +3,7 @@ const mongoose = require("mongoose");
 
 const likeSchema = new mongoose.Schema({
   userId: String,
-  movieId: String,
+  instrumentId: String,
 });
 
 const Like = mongoose.model("Like", likeSchema);
@@ -11,7 +11,7 @@ const Like = mongoose.model("Like", likeSchema);
 function validateLike(like) {
   const schema = Joi.object({
     userId: Joi.objectId().required(),
-    movieId: Joi.objectId().required(),
+    instrumentId: Joi.objectId().required(),
   });
 
   return schema.validate(like);

@@ -22,14 +22,23 @@ const rentalSchema = new mongoose.Schema({
     }),
     required: true,
   },
-  movie: {
+  instrument: {
     type: new mongoose.Schema({
-      title: {
+      maker: {
         type: String,
         required: true,
-        trim: true,
-        minlength: 5,
+        minlength: 4,
         maxlength: 255,
+      },
+      model: {
+        type: String,
+        required: true,
+        minlength: 4,
+        maxlength: 255,
+      },
+      year: {
+        type: Number,
+        required: true,
       },
     }),
     required: true,
@@ -53,7 +62,7 @@ const Rental = mongoose.model("Rental", rentalSchema);
 function validateRental(rental) {
   const schema = Joi.object({
     customerId: Joi.objectId().required(),
-    movieId: Joi.objectId().required(),
+    instrumentId: Joi.objectId().required(),
     dateOut: Joi.date().required(),
     dateReturned: Joi.date().required(),
   });

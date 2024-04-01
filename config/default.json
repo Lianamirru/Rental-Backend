@@ -1,5 +1,5 @@
 {
-  "db": "mongodb://localhost/movies",
+  "db": "mongodb://localhost/instruments",
   "port": "3900",
   "jwtPrivateKey": ""
 }

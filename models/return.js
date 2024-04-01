@@ -22,13 +22,18 @@ const returnSchema = new mongoose.Schema({
     }),
     required: true,
   },
-  movie: {
+  instrument: {
     type: new mongoose.Schema({
-      title: {
+      maker: {
         type: String,
         required: true,
-        trim: true,
-        minlength: 5,
+        minlength: 4,
+        maxlength: 255,
+      },
+      model: {
+        type: String,
+        required: true,
+        minlength: 4,
         maxlength: 255,
       },
     }),

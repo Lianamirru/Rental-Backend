@@ -1,7 +1,7 @@
 const express = require("express");
 
 const { Return } = require("../models/return");
-const { Movie } = require("../models/movie");
+const { Instrument } = require("../models/instrument");
 
 const auth = require("../middleware/authorization");
 const admin = require("../middleware/admin");
@@ -20,12 +20,12 @@ router.post("/", [auth, admin], async (req, res) => {
 
   const daysDifference = Math.ceil(timeDifference / (1000 * 60 * 60 * 24));
 
-  const movie = await Movie.findById(rental.movie._id);
+  const instrument = await Instrument.findById(rental.instrument._id);
 
   const newReturn = new Return({
     ...rental,
     dateReturned: new Date(),
-    rentalFee: (daysDifference + 1) * movie.dailyRentalRate,
+    rentalFee: (daysDifference + 1) * (instrument.monthlyRentalPrice / 30),
   });
 
   newReturn.save();
