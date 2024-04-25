@@ -1,21 +1,11 @@
 {
-  "name": "movies_backend",
+  "name": "instruments_backend",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
     "test": "jest --watchAll --verbose"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/Lianamirru/movies-back.git"
-  },
-  "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/Lianamirru/movies-back/issues"
-  },
-  "homepage": "https://github.com/Lianamirru/movies-back#readme",
   "dependencies": {
     "bcrypt": "^5.1.0",
     "config": "^3.3.9",
