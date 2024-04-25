@@ -10,7 +10,6 @@ const router = express.Router();
 
 router.post("/", [auth, admin], async (req, res) => {
   const rental = req.body;
-
   const today = new Date();
   today.setHours(0, 0, 0, 0);
 

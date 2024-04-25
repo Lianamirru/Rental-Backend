@@ -33,7 +33,7 @@ router.put("/:id", auth, async (req, res) => {
     req.params.id,
     {
       name: req.body.name,
-      // isGold: req.body.isGold,
+      isGold: req.body.isGold,
       userId: req.body.userId,
       phone: req.body.phone,
     },

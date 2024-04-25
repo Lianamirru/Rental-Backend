@@ -68,32 +68,4 @@ router.delete("/:instrumentId", auth, async (req, res) => {
   res.send(cartItem);
 });
 
-// router.put("/:id", async (req, res) => {
-//   const { error } = validate(req.body);
-//   if (error) return res.status(400).send(error.details[0].message);
-
-//   const genre = await Genre.findById(req.body.genreId);
-//   if (!genre) return res.status(400).send("Invalid genre.");
-
-//   const movie = await Movie.findByIdAndUpdate(
-//     req.params.id,
-//     {
-//       title: req.body.title,
-//       genre: {
-//         _id: genre._id,
-//         name: genre.name,
-//       },
-//       numberInStock: req.body.numberInStock,
-//       dailyRentalRate: req.body.dailyRentalRate,
-//     },
-//     // get back updated document not initial
-//     { new: true }
-//   );
-
-//   if (!movie)
-//     return res.status(404).send("The movie with the given ID was not found.");
-
-//   res.send(movie);
-// });
-
 module.exports = router;
