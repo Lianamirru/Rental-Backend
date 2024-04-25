@@ -1,5 +1,5 @@
 {
-  "db": "mongodb://localhost/instruments",
+  "db": "mongodb+srv://mirgalievaliana:IrWRz1VR7J7TKomb@cluster0.ozp32dy.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0",
   "port": "3900",
   "jwtPrivateKey": ""
 }
