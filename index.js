@@ -9,7 +9,7 @@ require("./start/validation")();
 
 const app = express();
 
-app.use(cors());
+app.use(cors({ origin: "*" }));
 require("./start/routes")(app);
 
 if (!config.get("jwtPrivateKey")) {
