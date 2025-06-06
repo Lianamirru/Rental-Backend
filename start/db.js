@@ -9,7 +9,7 @@ module.exports = async () => {
     useNewUrlParser: true,
     useUnifiedTopology: true,
   });
-  mongoose.connect(db).then(() => {
+  await mongoose.connect(db).then(() => {
     logger.info(`Connected to ${db}...`);
   });
 
