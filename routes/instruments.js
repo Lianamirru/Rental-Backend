@@ -5,8 +5,10 @@ const { Instrument } = require("../models/instrument");
 const router = express.Router();
 
 router.get("/", async (req, res) => {
-  const movies = await Instrument.find().select("-__v").sort("maker model");
-  res.send(movies);
+  const instruments = await Instrument.find()
+    .select("-__v")
+    .sort("maker model");
+  res.send(instruments);
 });
 
 router.get("/:id", async (req, res) => {

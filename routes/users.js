@@ -71,10 +71,12 @@ router.put("/:id", async (req, res) => {
     { new: true }
   );
 
-  if (!movie)
-    return res.status(404).send("The movie with the given ID was not found.");
+  if (!instrument)
+    return res
+      .status(404)
+      .send("The instrument with the given ID was not found.");
 
-  res.send(movie);
+  res.send(instrument);
 });
 
 module.exports = router;
