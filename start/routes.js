@@ -13,14 +13,14 @@ const customers = require("../routes/customers");
 
 module.exports = (app) => {
   app.use(express.json());
-  app.use("/api/instruments", instruments);
-  app.use("/api/categories", categories);
-  app.use("/api/likes", likes);
-  app.use("/api/users", users);
-  app.use("/api/auth", auth);
-  app.use("/api/cart", cart);
-  app.use("/api/rentals", rentals);
-  app.use("/api/returns", returns);
-  app.use("/api/customers", customers);
+  app.use("/instruments", instruments);
+  app.use("/categories", categories);
+  app.use("/likes", likes);
+  app.use("/users", users);
+  app.use("/auth", auth);
+  app.use("/cart", cart);
+  app.use("/rentals", rentals);
+  app.use("/returns", returns);
+  app.use("/customers", customers);
   app.use(error);
 };
