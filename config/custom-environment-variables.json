@@ -1,3 +1,4 @@
 {
-  "jwtPrivateKey": "instruments_jwtPrivateKey"
+  "db": "MONGO_URL",
+  "jwtPrivateKey": "JWT_SECRET"
 }
