@@ -127,7 +127,7 @@ const encodeImage = (path) => {
   return { data: image, contentType: "image/png" };
 };
 
-async function seed() {
+export async function seed() {
   await mongoose.connect(config.get("db"));
 
   await Instrument.deleteMany({});
