@@ -3,6 +3,7 @@ const config = require("config");
 
 const logger = require("./logging");
 const { seed } = require("../seed");
+const { Category } = require("../models/category");
 
 module.exports = async () => {
   const db = config.get("db", {
