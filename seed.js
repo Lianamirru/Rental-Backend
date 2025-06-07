@@ -127,8 +127,8 @@ const encodeImage = (path) => {
   return { data: image, contentType: "image/png" };
 };
 
-module.exports = async function seed() {
-  await mongoose.connect(config.get("db"));
+async function seed() {
+  // await mongoose.connect(config.get("db"));
 
   await Instrument.deleteMany({});
   await Category.deleteMany({});
@@ -151,9 +151,10 @@ module.exports = async function seed() {
     await Instrument.insertMany(instruments);
   }
 
-  mongoose.disconnect();
+  // mongoose.disconnect();
 
-  console.info("Done!");
-};
+  // console.info("Done!");
+}
 
-seed();
+// seed();
+module.exports = seed;
