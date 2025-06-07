@@ -10,6 +10,7 @@ const cart = require("../routes/cart");
 const rentals = require("../routes/rentals");
 const returns = require("../routes/returns");
 const customers = require("../routes/customers");
+const seed = require("../routes/seed");
 
 module.exports = (app) => {
   app.use(express.json());
@@ -22,5 +23,6 @@ module.exports = (app) => {
   app.use("/rentals", rentals);
   app.use("/returns", returns);
   app.use("/customers", customers);
+  app.use("/seed", seed);
   app.use(error);
 };
