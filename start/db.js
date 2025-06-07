@@ -15,6 +15,7 @@ module.exports = async () => {
   });
 
   const categoriesCount = await Category.countDocuments();
+  logger.info(`Categories count: ${categoriesCount}`);
   if (categoriesCount === 0) {
     await seed();
   }
